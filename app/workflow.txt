@@ -1,0 +1,12 @@
+In virtualenv:
+Flask
+Needle
+
+Follow web instructions for installing node/npm
+
+npm:
+Phantomjs
+
+apt-get:
+perceptualdiff
+libfontconfig
