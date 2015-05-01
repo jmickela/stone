@@ -11,21 +11,22 @@ def index():
 
 @app.route('/api/<string:project>/run-test/<string:test_name>')
 def run_test(project, test_name):
-	if(
 
-	)
+	method = getattr(SomeTest(test_name), test_name, None)
+	if callable(method):
+		suite = unittest.TestSuite()
 
-	suite = unittest.TestSuite()
+		try:
+			test = SomeTest('test_image')
+			suite.addTest(test)
+		except:
+			return jsonify({'status': 'failed', 'error_text': "Couldn't add test"})
 
-	test = SomeTest('test_image')
+		response = None
+		try:
+			response = unittest.TextTestRunner().run(suite)
+		except Exception as e:
+			return jsonify({"status": "failed"})
 
-	suite.addTest(test)
-
-	response = None
-	try:
-		response = unittest.TextTestRunner().run(suite)
-	except Exception as e:
-		print response
-		print test
-
-	return jsonify({"":""})
+		return jsonify({"status": "passed"})
+	return jsonify({'status': 'failed', 'error_text': 'Method not found'})
